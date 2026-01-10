@@ -1,12 +1,14 @@
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { Header } from '@/heroManagement/components/Header';
+import { mockUsers } from '@/data/mockUsers';
+import type { User } from '@/heroManagement/types/user';
 
 export const HomePage = () => {
+  const [users, setUsers] = useState<User[]>(mockUsers);
+
   return (
-    <div className="h-full bg-indigo-950">
-      <h1 className="text-2xl text-white mb-12">User Management</h1>
-      <Button variant="destructive" className="text-2xl">
-        Click
-      </Button>
+    <div className="min-h-screen bg-background">
+      <Header />
     </div>
   );
 };
