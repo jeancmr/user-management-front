@@ -1,12 +1,6 @@
-import { Button } from './components/ui/button';
+import { RouterProvider } from 'react-router';
+import { appRouter } from './router/app.router';
 
 export const UserManagementApp = () => {
-  return (
-    <div className="h-full bg-indigo-950">
-      <h1 className="text-2xl text-white mb-12">User Management</h1>
-      <Button variant="destructive" className="text-2xl">
-        Click
-      </Button>
-    </div>
-  );
+  return <RouterProvider router={appRouter} />;
 };
