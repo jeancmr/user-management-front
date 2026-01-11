@@ -4,13 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ContinueWith } from './ContinueWith';
+import { getTextFormSubmit } from '../utils/get-text-form-submit';
 
 interface Props {
   title: string;
   description?: string;
+  isLogin: boolean;
 }
 
-export const LoginForm = ({ title, description }: Props) => {
+export const AuthForm = ({ title, description, isLogin }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,6 +31,46 @@ export const LoginForm = ({ title, description }: Props) => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        {!isLogin && (
+          <>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <Label htmlFor="firstName" className="text-foreground font-medium">
+                  First name
+                </Label>
+                <Input
+                  id="firstName"
+                  placeholder="John"
+                  required
+                  className="h-11 bg-background border-input"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName" className="text-foreground font-medium">
+                  Last name
+                </Label>
+                <Input
+                  id="lastName"
+                  placeholder="Doe"
+                  required
+                  className="h-11 bg-background border-input"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="company" className="text-foreground font-medium">
+                Company
+              </Label>
+              <Input
+                id="company"
+                placeholder="Acme Inc."
+                className="h-11 bg-background border-input"
+              />
+            </div>
+          </>
+        )}
+
         <div className="space-y-2">
           <Label htmlFor="email" className="text-foreground font-medium">
             Email
@@ -46,18 +88,21 @@ export const LoginForm = ({ title, description }: Props) => {
             <Label htmlFor="password" className="text-foreground font-medium">
               Password
             </Label>
-            <button
-              type="button"
-              className="text-sm text-primary hover:text-primary/80 font-medium"
-            >
-              Forgot password?
-            </button>
+
+            {isLogin && (
+              <button
+                type="button"
+                className="text-sm text-primary hover:text-primary/80 font-medium"
+              >
+                Forgot password?
+              </button>
+            )}
           </div>
           <div className="relative">
             <Input
               id="password"
               type={showPassword ? 'text' : 'password'}
-              placeholder="Enter your password"
+              placeholder={isLogin ? 'Enter your password' : 'Create a strong password'}
               required
               className="h-11 bg-background border-input pr-10"
             />
@@ -72,12 +117,12 @@ export const LoginForm = ({ title, description }: Props) => {
         </div>
 
         <Button type="submit" className="w-full h-11 font-medium" disabled={isLoading}>
-          {isLoading ? 'Signing in...' : 'Sign In'}
+          {getTextFormSubmit(isLoading, isLogin)}
           {!isLoading && <ArrowRight className="w-4 h-4 ml-2" />}
         </Button>
       </form>
 
-      <ContinueWith text="Or continue with" />
+      <ContinueWith text={isLogin ? 'Or continue with' : 'Or sign up with'} />
     </div>
   );
 };
