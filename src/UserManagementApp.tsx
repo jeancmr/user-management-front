@@ -1,6 +1,11 @@
 import { RouterProvider } from 'react-router';
 import { appRouter } from './router/app.router';
+import { ThemeProvider } from './context/ThemeContextProvider';
 
 export const UserManagementApp = () => {
-  return <RouterProvider router={appRouter} />;
+  return (
+    <ThemeProvider>
+      <RouterProvider router={appRouter} />;
+    </ThemeProvider>
+  );
 };
