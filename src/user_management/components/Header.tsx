@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/context/useTheme';
-import { LogOut, Plus, Sun, Users } from 'lucide-react';
+import { LogOut, Plus, Sun, Users, Moon } from 'lucide-react';
 
 export const Header = () => {
-  const { toggleTheme } = useTheme();
+  const { toggleTheme, theme } = useTheme();
+
+  const isThemeLight = theme === 'light';
+
   return (
     <header className="border-b border-border bg-card">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -38,7 +41,7 @@ export const Header = () => {
             className="gap-2 text-muted-foreground hover:text-foreground bg-transparent"
             onClick={toggleTheme}
           >
-            <Sun className="h-4 w-4" />
+            {isThemeLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </Button>
         </nav>
       </div>
