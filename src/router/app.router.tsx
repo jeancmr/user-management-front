@@ -1,4 +1,4 @@
-import { HomePage } from '@/heroManagement/pages/home/HomePage';
+import { HomePage } from '@/user_management/pages/home/HomePage';
 import { createBrowserRouter } from 'react-router';
 
 export const appRouter = createBrowserRouter([
