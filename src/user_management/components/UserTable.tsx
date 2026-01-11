@@ -16,6 +16,7 @@ import {
 
 import { getInitials } from '../utils/get-initials-name';
 import type { User } from '../types/user';
+import { CustomPagination } from '@/components/custom/CustomPagination';
 
 interface Props {
   users: User[];
@@ -143,6 +144,8 @@ export const UserTable = ({ users, onToggleStatus }: Props) => {
             No users found matching your filters.
           </div>
         )}
+
+        <CustomPagination totalPages={3} />
       </CardContent>
     </Card>
   );
