@@ -1,4 +1,4 @@
-import type { User } from '@/heroManagement/types/user';
+import type { User } from '@/user_management/types/user';
 
 export const mockUsers: User[] = [
   {
