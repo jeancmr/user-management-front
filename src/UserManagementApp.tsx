@@ -5,7 +5,7 @@ import { ThemeProvider } from './context/ThemeContextProvider';
 export const UserManagementApp = () => {
   return (
     <ThemeProvider>
-      <RouterProvider router={appRouter} />;
+      <RouterProvider router={appRouter} />
     </ThemeProvider>
   );
 };
