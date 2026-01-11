@@ -1,11 +1,11 @@
-import { AuthForm } from '../components/AuthForm';
 import { IlustrationPanel } from '../components/IlustrationPanel';
+import { AuthPanel } from '../components/AuthPanel';
 
 export const LoginPage = () => {
   return (
     <div className="min-h-screen flex bg-background">
       <IlustrationPanel />
-      <AuthForm />
+      <AuthPanel />
     </div>
   );
 };
