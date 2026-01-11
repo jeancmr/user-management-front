@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Users } from 'lucide-react';
-import { AuthForm } from './AuthForm';
+import { LoginForm } from './LoginForm';
+import { RegisterForm } from './RegisterForm';
 
 export const AuthPanel = () => {
   return (
@@ -32,15 +33,14 @@ export const AuthPanel = () => {
           </TabsList>
 
           <TabsContent value="login">
-            <AuthForm
+            <LoginForm
               title="Welcome back"
-              isLogin={true}
               description="Enter your credentials to access your dashboard"
             />
           </TabsContent>
 
           <TabsContent value="register">
-            <AuthForm title="Create an account" isLogin={false} />
+            <RegisterForm title="Create an account" />
           </TabsContent>
         </Tabs>
       </div>
