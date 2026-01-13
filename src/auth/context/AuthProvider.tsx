@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        setIsAuthenticated(false);
         setIsLoading(true);
         await verifyAction();
         setIsAuthenticated(true);
