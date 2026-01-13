@@ -17,6 +17,7 @@ import { loginAction } from '../actions/login';
 import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
 import { ContinueWith } from './ContinueWith';
 import { AuthContext } from '../context/AuthContext';
+import { toast } from 'sonner';
 
 interface Props {
   title: string;
@@ -39,12 +40,11 @@ export const LoginForm = ({ title, description }: Props) => {
   const handleSubmit = async ({ email, password }: LoginFormValues) => {
     try {
       setIsLoading(true);
-      const result = await loginAction({ email, password });
-      console.log(result);
+      await loginAction({ email, password });
       onAuth(true);
+      toast.success('Login succesfully');
     } catch (error) {
-      console.error(error as Error);
-      console.log((error as Error).message);
+      toast.error((error as Error).message);
     } finally {
       setIsLoading(false);
     }
