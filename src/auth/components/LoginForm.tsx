@@ -1,7 +1,3 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -13,8 +9,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ContinueWith } from './ContinueWith';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { loginAction } from '../actions/login';
 import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
+import { ContinueWith } from './ContinueWith';
 
 interface Props {
   title: string;
@@ -33,11 +34,17 @@ export const LoginForm = ({ title, description }: Props) => {
     },
   });
 
-  const handleSubmit = async (data: LoginFormValues) => {
-    console.log(data);
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
+  const handleSubmit = async ({ email, password }: LoginFormValues) => {
+    try {
+      setIsLoading(true);
+      const result = await loginAction({ email, password });
+      console.log(result);
+    } catch (error) {
+      console.error(error as Error);
+      console.log((error as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
