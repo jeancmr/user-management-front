@@ -1,9 +1,12 @@
+import { AuthContext } from '@/auth/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/context/useTheme';
 import { LogOut, Plus, Sun, Users, Moon } from 'lucide-react';
+import { use } from 'react';
 
 export const Header = () => {
   const { toggleTheme, theme } = useTheme();
+  const { logout } = use(AuthContext);
 
   const isThemeLight = theme === 'light';
 
@@ -30,7 +33,7 @@ export const Header = () => {
           <Button
             variant="outline"
             className="gap-2 text-muted-foreground hover:text-foreground bg-transparent"
-            onClick={() => console.log('logout action')}
+            onClick={logout}
           >
             <LogOut className="h-4 w-4" />
             Logout

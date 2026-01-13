@@ -11,11 +11,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { loginAction } from '../actions/login';
 import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
 import { ContinueWith } from './ContinueWith';
+import { AuthContext } from '../context/AuthContext';
 
 interface Props {
   title: string;
@@ -25,6 +26,7 @@ interface Props {
 export const LoginForm = ({ title, description }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { onAuth } = use(AuthContext);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -39,6 +41,7 @@ export const LoginForm = ({ title, description }: Props) => {
       setIsLoading(true);
       const result = await loginAction({ email, password });
       console.log(result);
+      onAuth(true);
     } catch (error) {
       console.error(error as Error);
       console.log((error as Error).message);
