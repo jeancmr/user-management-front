@@ -1,5 +1,5 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
-import { ThemeContext, type Theme } from './ThemeContext ';
+import { ThemeContext, type Theme } from './ThemeContext';
 
 const getInitialTheme = () => {
   const stored = localStorage.getItem('theme');
