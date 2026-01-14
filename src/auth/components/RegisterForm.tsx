@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -14,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { registerSchema, type RegisterFormValues } from '../schemas/register.schema';
 import { ContinueWith } from './ContinueWith';
+import { registerAction } from '../actions/register.action';
 
 interface Props {
   title: string;
@@ -36,10 +38,17 @@ export const RegisterForm = ({ title, description }: Props) => {
   });
 
   const handleSubmit = async (data: RegisterFormValues) => {
-    console.log(data);
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await registerAction(data);
+      toast.success('Signed up succesfully', {
+        description: 'Now you can log in',
+      });
+    } catch (error) {
+      toast.error((error as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
