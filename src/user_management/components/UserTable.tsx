@@ -120,7 +120,7 @@ export const UserTable = ({ users, onToggleStatus }: Props) => {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-muted-foreground">
-                    {formatDistanceToNow(user.lastLogin, { addSuffix: true })}
+                    {user.lastLogin ? formatDistanceToNow(user.lastLogin, { addSuffix: true }) : ''}
                   </TableCell>
                   <TableCell className="text-muted-foreground">
                     {formatDistanceToNow(user.createdAt, { addSuffix: true })}

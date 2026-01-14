@@ -9,8 +9,10 @@ export function getWeeklyActivityData(users: User[]) {
   }));
 
   users.forEach((user) => {
-    const dayIndex = user.lastLogin.getDay();
-    counts[dayIndex].logins++;
+    if (user.lastLogin) {
+      const dayIndex = user.lastLogin.getDay();
+      counts[dayIndex].logins++;
+    }
   });
 
   return counts;

@@ -6,10 +6,12 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  company: string;
   role: UserRole;
   status: UserStatus;
   plan: UserPlan;
-  lastLogin: Date;
+  lastLogin: Date | null;
   createdAt: Date;
+  updatedAt: Date;
   avatar?: string;
 }
