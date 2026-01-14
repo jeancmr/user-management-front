@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -12,10 +12,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-
-import { ContinueWith } from './ContinueWith';
 import { registerSchema, type RegisterFormValues } from '../schemas/register.schema';
+import { ContinueWith } from './ContinueWith';
 
 interface Props {
   title: string;
@@ -23,7 +21,6 @@ interface Props {
 }
 
 export const RegisterForm = ({ title, description }: Props) => {
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<RegisterFormValues>({
@@ -145,7 +142,7 @@ export const RegisterForm = ({ title, description }: Props) => {
 
                   <FormControl>
                     <Input
-                      type={showPassword ? 'text' : 'password'}
+                      type="password"
                       {...field}
                       className="h-11 bg-background border-input pr-10"
                     />

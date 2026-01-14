@@ -1,3 +1,8 @@
+import { use, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -9,15 +14,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Eye, EyeOff } from 'lucide-react';
-import { use, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { loginAction } from '../actions/login';
+import { loginAction } from '../actions/login.action';
 import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
 import { ContinueWith } from './ContinueWith';
 import { AuthContext } from '../context/AuthContext';
-import { toast } from 'sonner';
 
 interface Props {
   title: string;
