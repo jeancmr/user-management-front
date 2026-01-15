@@ -3,7 +3,7 @@ import { userApi } from '../api/user.api';
 import type { UsersReponse } from '../types/get-users.response';
 import type { ApiErrorResponse } from '@/auth/types/api.error.response';
 
-export const getUsersByPageAction = async (page: number, limit: number) => {
+export const getUsersByPageAction = async (page: number = 1, limit: number = 6) => {
   try {
     const { data } = await userApi.get<UsersReponse>('/', {
       params: { page, limit },
@@ -16,7 +16,9 @@ export const getUsersByPageAction = async (page: number, limit: number) => {
       lastLogin: user.lastLogin ? new Date(user.lastLogin) : null,
     }));
 
-    return usersWithDatesFormated;
+    const { totalPages } = data.data.meta;
+
+    return { usersWithDatesFormated, totalPages };
   } catch (error) {
     if (axios.isAxiosError<ApiErrorResponse>(error)) {
       throw new Error(error.response?.data.message);

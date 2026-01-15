@@ -21,8 +21,9 @@ import { CustomPagination } from '@/components/custom/CustomPagination';
 interface Props {
   users: User[];
   onToggleStatus: (userId: string) => void;
+  totalPages: number;
 }
-export const UserTable = ({ users, onToggleStatus }: Props) => {
+export const UserTable = ({ users, onToggleStatus, totalPages }: Props) => {
   const totalUsers = users.length;
 
   return (
@@ -145,7 +146,7 @@ export const UserTable = ({ users, onToggleStatus }: Props) => {
           </div>
         )}
 
-        <CustomPagination totalPages={3} />
+        <CustomPagination totalPages={totalPages} />
       </CardContent>
     </Card>
   );

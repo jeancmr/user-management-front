@@ -11,19 +11,26 @@ import { toast } from 'sonner';
 
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>(mockUsers);
+  const [totalPages, setTotalPages] = useState(0);
   const [searchParams] = useSearchParams();
 
   const queryPage = searchParams.get('page') ?? '1';
-  const page = isNaN(+queryPage) ? 1 : +queryPage;
+  let page = isNaN(+queryPage) ? 1 : +queryPage;
+  if (page < 1) page = 1;
 
   const queryLimit = searchParams.get('limit') ?? '6';
-  const limit = isNaN(+queryLimit) ? 6 : +queryLimit;
+  let limit = isNaN(+queryLimit) ? 6 : +queryLimit;
+  if (limit < 1) limit = 6;
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const users = await getUsersByPageAction(page, limit);
+        const { usersWithDatesFormated: users, totalPages } = await getUsersByPageAction(
+          page,
+          limit
+        );
         setUsers(users);
+        setTotalPages(totalPages);
       } catch (error) {
         toast.error((error as Error).message);
       }
@@ -51,7 +58,7 @@ export const HomePage = () => {
 
         <UserCharts users={users} />
 
-        <UserTable users={users} onToggleStatus={handleToggleStatus} />
+        <UserTable users={users} onToggleStatus={handleToggleStatus} totalPages={totalPages} />
       </main>
     </div>
   );
