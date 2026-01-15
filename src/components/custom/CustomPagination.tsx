@@ -1,23 +1,12 @@
+import { useValidateParams } from '@/user_management/hooks/useValidateParams';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useSearchParams } from 'react-router';
 import { Button } from '../ui/button';
 
 interface Props {
   totalPages: number;
 }
 export const CustomPagination = ({ totalPages }: Props) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const queryPage = searchParams.get('page') ?? '1';
-  let page = isNaN(+queryPage) ? 1 : +queryPage;
-  if (page < 1) page = 1;
-
-  const handlePageChange = (page: number) => {
-    if (page < 1 || page > totalPages) return;
-
-    searchParams.set('page', page.toString());
-    setSearchParams(searchParams);
-  };
+  const { page, onPageChange } = useValidateParams();
 
   return (
     <div className="flex items-center justify-center space-x-2 border-t border-border py-4">
@@ -25,7 +14,7 @@ export const CustomPagination = ({ totalPages }: Props) => {
         variant="outline"
         size="sm"
         disabled={page === 1}
-        onClick={() => handlePageChange(page - 1)}
+        onClick={() => onPageChange(page - 1, totalPages)}
       >
         <ChevronLeft className="h-4 w-4" />
         Previous
@@ -36,7 +25,7 @@ export const CustomPagination = ({ totalPages }: Props) => {
           key={index}
           variant={page === index + 1 ? 'default' : 'outline'}
           size="sm"
-          onClick={() => handlePageChange(index + 1)}
+          onClick={() => onPageChange(index + 1, totalPages)}
         >
           {index + 1}
         </Button>
@@ -46,7 +35,7 @@ export const CustomPagination = ({ totalPages }: Props) => {
         variant="outline"
         size="sm"
         disabled={page === totalPages}
-        onClick={() => handlePageChange(page + 1)}
+        onClick={() => onPageChange(page + 1, totalPages)}
       >
         Next
         <ChevronRight className="h-4 w-4" />

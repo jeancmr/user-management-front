@@ -4,23 +4,15 @@ import { Header } from '@/user_management/components/Header';
 import { StatsGridCards } from '@/user_management/components/StatsGridCards';
 import { UserCharts } from '@/user_management/components/UserCharts';
 import { UserTable } from '@/user_management/components/UserTable';
+import { useValidateParams } from '@/user_management/hooks/useValidateParams';
 import type { User } from '@/user_management/types/user';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
 import { toast } from 'sonner';
 
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>(mockUsers);
   const [totalPages, setTotalPages] = useState(0);
-  const [searchParams] = useSearchParams();
-
-  const queryPage = searchParams.get('page') ?? '1';
-  let page = isNaN(+queryPage) ? 1 : +queryPage;
-  if (page < 1) page = 1;
-
-  const queryLimit = searchParams.get('limit') ?? '6';
-  let limit = isNaN(+queryLimit) ? 6 : +queryLimit;
-  if (limit < 1) limit = 6;
+  const { limit, page } = useValidateParams();
 
   useEffect(() => {
     const getUsers = async () => {
