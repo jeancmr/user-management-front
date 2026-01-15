@@ -3,9 +3,11 @@ import { userApi } from '../api/user.api';
 import type { UsersReponse } from '../types/get-users.response';
 import type { ApiErrorResponse } from '@/auth/types/api.error.response';
 
-export const getUsersByPageAction = async () => {
+export const getUsersByPageAction = async (page: number, limit: number) => {
   try {
-    const { data } = await userApi.get<UsersReponse>('/');
+    const { data } = await userApi.get<UsersReponse>('/', {
+      params: { page, limit },
+    });
 
     const usersWithDatesFormated = data.data.users.map((user) => ({
       ...user,

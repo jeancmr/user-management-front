@@ -6,27 +6,31 @@ import { UserCharts } from '@/user_management/components/UserCharts';
 import { UserTable } from '@/user_management/components/UserTable';
 import type { User } from '@/user_management/types/user';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import { toast } from 'sonner';
 
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>(mockUsers);
+  const [searchParams] = useSearchParams();
+
+  const queryPage = searchParams.get('page') ?? '1';
+  const page = isNaN(+queryPage) ? 1 : +queryPage;
+
+  const queryLimit = searchParams.get('limit') ?? '6';
+  const limit = isNaN(+queryLimit) ? 6 : +queryLimit;
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        // setIsLoading(true);
-        const users = await getUsersByPageAction();
-        console.log(users);
+        const users = await getUsersByPageAction(page, limit);
         setUsers(users);
       } catch (error) {
         toast.error((error as Error).message);
-      } finally {
-        // setIsLoading(false);
       }
     };
 
     getUsers();
-  }, []);
+  }, [page, limit]);
 
   const handleToggleStatus = (userId: string) => {
     setUsers((prev) =>
