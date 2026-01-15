@@ -5,7 +5,7 @@ import { logoutAction } from '../actions/logout.action';
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleAuth = (value: boolean) => {
     setIsAuthenticated(value);
@@ -20,8 +20,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        setIsAuthenticated(false);
-        setIsLoading(true);
         await verifyAction();
         setIsAuthenticated(true);
       } catch {
