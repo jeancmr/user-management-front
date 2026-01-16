@@ -26,9 +26,10 @@ interface EditUserModalProps {
   user: User;
   open: boolean;
   onCancelEdit: (open: boolean) => void;
+  onUserUpdated: () => void;
 }
 
-export const UserEditForm = ({ user, open, onCancelEdit }: EditUserModalProps) => {
+export const UserEditForm = ({ user, open, onCancelEdit, onUserUpdated }: EditUserModalProps) => {
   const [role, setRole] = useState<UserRole>(user.role);
   const [status, setStatus] = useState<UserStatus>(user.status);
   const [plan, setPlan] = useState<UserPlan>(user.plan);
@@ -43,6 +44,8 @@ export const UserEditForm = ({ user, open, onCancelEdit }: EditUserModalProps) =
     try {
       await updateUserAction(data, user.id);
       toast.success('User updated succesfully');
+      onUserUpdated();
+      onCancelEdit(false);
     } catch (error) {
       toast.error((error as Error).message);
     }

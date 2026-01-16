@@ -14,6 +14,7 @@ import type { User } from '@/user_management/types/user';
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const [summary, setSummary] = useState<Summary>({
     totalUsers: 0,
@@ -46,7 +47,7 @@ export const HomePage = () => {
     };
 
     getUsers();
-  }, [page, limit]);
+  }, [page, limit, refreshKey]);
 
   useEffect(() => {
     const getSummaryAnalytics = async () => {
@@ -56,7 +57,7 @@ export const HomePage = () => {
     };
 
     getSummaryAnalytics();
-  }, []);
+  }, [refreshKey]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -74,6 +75,7 @@ export const HomePage = () => {
             user={editingUser}
             open={!!editingUser}
             onCancelEdit={(open: boolean) => !open && setEditingUser(null)}
+            onUserUpdated={() => setRefreshKey((prev) => prev + 1)}
           />
         )}
       </main>
