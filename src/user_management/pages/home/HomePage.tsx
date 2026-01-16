@@ -1,4 +1,6 @@
-import { mockUsers } from '@/data/mockUsers';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { getSummaryAnalyticsAction } from '@/user_management/actions/get-summary-analytics.action';
 import { getUsersByPageAction } from '@/user_management/actions/get-users-by-page.action';
 import { Header } from '@/user_management/components/Header';
 import { StatsGridCards } from '@/user_management/components/StatsGridCards';
@@ -6,11 +8,23 @@ import { UserCharts } from '@/user_management/components/UserCharts';
 import { UserTable } from '@/user_management/components/UserTable';
 import { useValidateParams } from '@/user_management/hooks/useValidateParams';
 import type { User } from '@/user_management/types/user';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import type { Analytics, Summary } from '@/user_management/types/get-summary-analytics-response';
 
 export const HomePage = () => {
-  const [users, setUsers] = useState<User[]>(mockUsers);
+  const [users, setUsers] = useState<User[]>([]);
+  const [summary, setSummary] = useState<Summary>({
+    totalUsers: 0,
+    active: 0,
+    suspended: 0,
+    pro: 0,
+  });
+
+  const [analytics, setAnalytics] = useState<Analytics>({
+    userGrowth: [],
+    planDistribution: [],
+    weeklyActivity: [],
+  });
+
   const [totalPages, setTotalPages] = useState(0);
   const { limit, page } = useValidateParams();
 
@@ -31,6 +45,16 @@ export const HomePage = () => {
     getUsers();
   }, [page, limit]);
 
+  useEffect(() => {
+    const getSummaryAnalytics = async () => {
+      const { summary: summaryRes, analytics: analyticsRes } = await getSummaryAnalyticsAction();
+      setSummary(summaryRes);
+      setAnalytics(analyticsRes);
+    };
+
+    getSummaryAnalytics();
+  }, []);
+
   const handleToggleStatus = (userId: string) => {
     setUsers((prev) =>
       prev.map((user) =>
@@ -46,9 +70,9 @@ export const HomePage = () => {
       <Header />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <StatsGridCards users={users} />
+        <StatsGridCards summary={summary} />
 
-        <UserCharts users={users} />
+        <UserCharts analytics={analytics} />
 
         <UserTable users={users} onToggleStatus={handleToggleStatus} totalPages={totalPages} />
       </main>

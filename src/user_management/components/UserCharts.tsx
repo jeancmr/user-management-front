@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Area,
   AreaChart,
@@ -11,25 +12,34 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import type { User } from '../types/user';
-import { getPlanDistribution, getUserGrowthData, getWeeklyActivityData } from '../utils';
+import type { Analytics } from '../types/get-summary-analytics-response';
 import { CardChartWrapper } from './CardChartWrapper';
 
 interface Props {
-  users: User[];
+  analytics: Analytics;
 }
 
-export const UserCharts = ({ users }: Props) => {
-  const planDistribution = getPlanDistribution(users);
-  const userGrowthData = getUserGrowthData(users);
-  const activityData = getWeeklyActivityData(users);
+type PieChartData = {
+  name: string;
+  value: number;
+  fill: string;
+};
+
+export const UserCharts = React.memo(({ analytics }: Props) => {
+  const { userGrowth, planDistribution, weeklyActivity } = analytics;
+
+  const chartData: PieChartData[] = planDistribution.map((item) => ({
+    name: item.name,
+    value: item.value,
+    fill: item.fill,
+  }));
 
   return (
     <div className="mb-6 grid gap-4 lg:grid-cols-3">
       <CardChartWrapper title="User Growth" quantity="2480">
         <div className="h-35">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={userGrowthData}>
+            <AreaChart data={userGrowth}>
               <defs>
                 <linearGradient id="userGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
@@ -69,7 +79,7 @@ export const UserCharts = ({ users }: Props) => {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={planDistribution}
+                  data={chartData}
                   cx="50%"
                   cy="50%"
                   innerRadius={45}
@@ -77,7 +87,7 @@ export const UserCharts = ({ users }: Props) => {
                   paddingAngle={2}
                   dataKey="value"
                 >
-                  {planDistribution.map((entry, index) => (
+                  {chartData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fill} />
                   ))}
                 </Pie>
@@ -93,7 +103,7 @@ export const UserCharts = ({ users }: Props) => {
             </ResponsiveContainer>
           </div>
           <div className="space-y-3">
-            {planDistribution.map((item) => (
+            {chartData.map((item) => (
               <div key={item.name} className="flex items-center gap-2">
                 <div className="h-3 w-3 rounded-full" style={{ backgroundColor: item.fill }} />
                 <span className="text-sm text-muted-foreground">{item.name}</span>
@@ -107,7 +117,7 @@ export const UserCharts = ({ users }: Props) => {
       <CardChartWrapper title="Weekly Activity" quantity="1,768">
         <div className="h-35">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={activityData}>
+            <BarChart data={weeklyActivity}>
               <XAxis
                 dataKey="day"
                 axisLine={false}
@@ -130,4 +140,4 @@ export const UserCharts = ({ users }: Props) => {
       </CardChartWrapper>
     </div>
   );
-};
+});

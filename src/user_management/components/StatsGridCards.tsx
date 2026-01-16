@@ -1,16 +1,13 @@
-import { Users, UserCheck, UserX, Crown } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import type { User } from '../types/user';
+import { Crown, UserCheck, Users, UserX } from 'lucide-react';
+import type { Summary } from '../types/get-summary-analytics-response';
 
 interface Props {
-  users: User[];
+  summary: Summary;
 }
 
-export const StatsGridCards = ({ users }: Props) => {
-  const totalUsers = users.length;
-  const activeUsers = users.filter((u) => u.status === 'active').length;
-  const suspendedUsers = users.filter((u) => u.status === 'suspended').length;
-  const proUsers = users.filter((u) => u.plan === 'pro').length;
+export const StatsGridCards = ({ summary }: Props) => {
+  const { active, pro, suspended, totalUsers } = summary;
 
   const stats = [
     {
@@ -22,21 +19,21 @@ export const StatsGridCards = ({ users }: Props) => {
     },
     {
       label: 'Active',
-      value: activeUsers.toLocaleString(),
+      value: active.toLocaleString(),
       icon: UserCheck,
       color: 'text-chart-2',
       bgColor: 'bg-chart-2/10',
     },
     {
       label: 'Suspended',
-      value: suspendedUsers.toLocaleString(),
+      value: suspended.toLocaleString(),
       icon: UserX,
       color: 'text-destructive',
       bgColor: 'bg-destructive/10',
     },
     {
       label: 'Pro Users',
-      value: proUsers.toLocaleString(),
+      value: pro.toLocaleString(),
       icon: Crown,
       color: 'text-chart-3',
       bgColor: 'bg-chart-3/10',

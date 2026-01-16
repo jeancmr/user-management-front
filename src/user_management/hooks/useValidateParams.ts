@@ -9,7 +9,7 @@ export const useValidateParams = () => {
 
   const queryLimit = searchParams.get('limit') ?? '6';
   let limit = isNaN(+queryLimit) ? 6 : +queryLimit;
-  if (limit < 1) limit = 6;
+  if (limit < 1 || limit > 50) limit = 6;
 
   const handlePageChange = (page: number, totalPages: number) => {
     if (page < 1 || page > totalPages) return;
