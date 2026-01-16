@@ -1,10 +1,7 @@
-import { formatDistanceToNow } from 'date-fns';
-import { ArrowUpDown, Pencil } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
 import {
   Table,
   TableBody,
@@ -13,17 +10,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { formatDistanceToNow } from 'date-fns';
+import { ArrowUpDown, Pencil } from 'lucide-react';
 
-import { getInitials } from '../utils/get-initials-name';
-import type { User } from '../types/user';
 import { CustomPagination } from '@/components/custom/CustomPagination';
+import type { User } from '../types/user';
+import { getInitials } from '../utils/get-initials-name';
 
 interface Props {
   users: User[];
-  onToggleStatus: (userId: string) => void;
   totalPages: number;
 }
-export const UserTable = ({ users, onToggleStatus, totalPages }: Props) => {
+export const UserTable = ({ users, totalPages }: Props) => {
   const totalUsers = users.length;
 
   return (
@@ -94,20 +92,15 @@ export const UserTable = ({ users, onToggleStatus, totalPages }: Props) => {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        checked={user.status === 'active'}
-                        onCheckedChange={() => onToggleStatus(user.id)}
-                        className="data-[state=checked]:bg-chart-2"
-                      />
-                      <span
-                        className={`text-sm ${
-                          user.status === 'active' ? 'text-chart-2' : 'text-destructive'
-                        }`}
-                      >
-                        {user.status}
-                      </span>
-                    </div>
+                    <Badge
+                      className={
+                        user.status === 'active'
+                          ? 'bg-chart-2/20 text-chart-2 hover:bg-chart-2/30'
+                          : 'bg-secondary text-destructive hover:bg-secondary'
+                      }
+                    >
+                      {user.status}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     <Badge

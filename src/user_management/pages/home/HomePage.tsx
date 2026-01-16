@@ -55,16 +55,6 @@ export const HomePage = () => {
     getSummaryAnalytics();
   }, []);
 
-  const handleToggleStatus = (userId: string) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === userId
-          ? { ...user, status: user.status === 'active' ? 'suspended' : 'active' }
-          : user
-      )
-    );
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -74,7 +64,7 @@ export const HomePage = () => {
 
         <UserCharts analytics={analytics} />
 
-        <UserTable users={users} onToggleStatus={handleToggleStatus} totalPages={totalPages} />
+        <UserTable users={users} totalPages={totalPages} />
       </main>
     </div>
   );
