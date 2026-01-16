@@ -16,9 +16,9 @@ export const getUsersByPageAction = async (page: number = 1, limit: number = 6) 
       lastLogin: user.lastLogin ? new Date(user.lastLogin) : null,
     }));
 
-    const { totalPages } = data.data.meta;
+    const { totalPages, total } = data.data.meta;
 
-    return { usersWithDatesFormated, totalPages };
+    return { usersWithDatesFormated, totalPages, total };
   } catch (error) {
     if (axios.isAxiosError<ApiErrorResponse>(error)) {
       throw new Error(error.response?.data.message);

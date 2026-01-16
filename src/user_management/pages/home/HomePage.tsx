@@ -30,17 +30,20 @@ export const HomePage = () => {
   });
 
   const [totalPages, setTotalPages] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
   const { limit, page } = useValidateParams();
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const { usersWithDatesFormated: users, totalPages } = await getUsersByPageAction(
-          page,
-          limit
-        );
+        const {
+          usersWithDatesFormated: users,
+          totalPages,
+          total: totalUsers,
+        } = await getUsersByPageAction(page, limit);
         setUsers(users);
         setTotalPages(totalPages);
+        setTotalUsers(totalUsers);
       } catch (error) {
         toast.error((error as Error).message);
       }
@@ -68,7 +71,12 @@ export const HomePage = () => {
 
         <UserCharts analytics={analytics} />
 
-        <UserTable users={users} totalPages={totalPages} onEditUser={setEditingUser} />
+        <UserTable
+          users={users}
+          totalPages={totalPages}
+          totalUsers={totalUsers}
+          onEditUser={setEditingUser}
+        />
 
         {editingUser && (
           <UserEditForm

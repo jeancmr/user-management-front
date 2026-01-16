@@ -20,11 +20,10 @@ import { getInitials } from '../utils/get-initials-name';
 interface Props {
   users: User[];
   totalPages: number;
+  totalUsers: number;
   onEditUser: (user: User) => void;
 }
-export const UserTable = ({ users, totalPages, onEditUser }: Props) => {
-  const totalUsers = users.length;
-
+export const UserTable = ({ users, totalPages, totalUsers, onEditUser }: Props) => {
   return (
     <Card className="bg-card border-border">
       <CardHeader className="pb-4">
