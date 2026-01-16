@@ -20,8 +20,9 @@ import { getInitials } from '../utils/get-initials-name';
 interface Props {
   users: User[];
   totalPages: number;
+  onEditUser: (user: User) => void;
 }
-export const UserTable = ({ users, totalPages }: Props) => {
+export const UserTable = ({ users, totalPages, onEditUser }: Props) => {
   const totalUsers = users.length;
 
   return (
@@ -124,6 +125,7 @@ export const UserTable = ({ users, totalPages }: Props) => {
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      onClick={() => onEditUser(user)}
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>

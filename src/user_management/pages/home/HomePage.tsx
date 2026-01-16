@@ -5,13 +5,16 @@ import { getUsersByPageAction } from '@/user_management/actions/get-users-by-pag
 import { Header } from '@/user_management/components/Header';
 import { StatsGridCards } from '@/user_management/components/StatsGridCards';
 import { UserCharts } from '@/user_management/components/UserCharts';
+import { UserEditForm } from '@/user_management/components/UserEditForm';
 import { UserTable } from '@/user_management/components/UserTable';
 import { useValidateParams } from '@/user_management/hooks/useValidateParams';
-import type { User } from '@/user_management/types/user';
 import type { Analytics, Summary } from '@/user_management/types/get-summary-analytics-response';
+import type { User } from '@/user_management/types/user';
 
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+
   const [summary, setSummary] = useState<Summary>({
     totalUsers: 0,
     active: 0,
@@ -64,7 +67,15 @@ export const HomePage = () => {
 
         <UserCharts analytics={analytics} />
 
-        <UserTable users={users} totalPages={totalPages} />
+        <UserTable users={users} totalPages={totalPages} onEditUser={setEditingUser} />
+
+        {editingUser && (
+          <UserEditForm
+            user={editingUser}
+            open={!!editingUser}
+            onCancelEdit={(open: boolean) => !open && setEditingUser(null)}
+          />
+        )}
       </main>
     </div>
   );

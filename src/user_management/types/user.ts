@@ -15,3 +15,5 @@ export interface User {
   updatedAt: Date;
   avatar?: string;
 }
+
+export type UpdateUser = Partial<User>;
