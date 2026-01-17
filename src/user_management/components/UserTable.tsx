@@ -15,6 +15,7 @@ import {
 import { CustomPagination } from '@/components/custom/CustomPagination';
 import type { User } from '../types/user';
 import { getInitials } from '../utils/get-initials-name';
+import { UserFilters } from './UserFilters';
 
 interface Props {
   users: User[];
@@ -24,12 +25,13 @@ interface Props {
   onDeleteUser: (user: User) => void;
 }
 export const UserTable = ({ users, totalPages, totalUsers, onEditUser, onDeleteUser }: Props) => {
-  console.log('USER TABLE');
   return (
     <Card className="bg-card border-border">
       <CardHeader className="pb-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-foreground">Users ({totalUsers})</CardTitle>
+
+          <UserFilters />
         </div>
       </CardHeader>
       <CardContent className="p-0">

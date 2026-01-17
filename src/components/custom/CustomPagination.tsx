@@ -1,4 +1,4 @@
-import { useValidateParams } from '@/user_management/hooks/useValidateParams';
+import { useValidateParams } from '@/user_management/hooks/useQueryParams';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 

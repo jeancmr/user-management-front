@@ -1,5 +1,5 @@
 import React, { use } from 'react';
-import { LogOut, Plus, Sun, Users, Moon } from 'lucide-react';
+import { LogOut, Sun, Users, Moon } from 'lucide-react';
 import { useTheme } from '@/context/useTheme';
 import { AuthContext } from '@/auth/context/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -25,11 +25,6 @@ export const Header = React.memo(() => {
         </div>
 
         <nav className="flex items-center gap-3">
-          <Button onClick={() => console.log('create user action')} className="gap-2">
-            <Plus className="h-4 w-4" />
-            Add User
-          </Button>
-
           <Button
             variant="outline"
             className="gap-2 text-muted-foreground hover:text-foreground bg-transparent"
