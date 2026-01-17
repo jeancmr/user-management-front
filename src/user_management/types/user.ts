@@ -1,6 +1,6 @@
 export const PLANS = ['free', 'pro'] as const;
 export const ROLES = ['admin', 'user'] as const;
-export const STATUSES = ['admin', 'user'] as const;
+export const STATUSES = ['active', 'suspended'] as const;
 
 export type UserStatus = (typeof STATUSES)[number];
 export type UserRole = (typeof ROLES)[number];
