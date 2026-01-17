@@ -76,6 +76,7 @@ export const HomePage = () => {
           totalPages={totalPages}
           totalUsers={totalUsers}
           onEditUser={setEditingUser}
+          onUserUpdated={() => setRefreshKey((prev) => prev + 1)}
         />
 
         {editingUser && (
