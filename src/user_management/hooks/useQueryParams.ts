@@ -17,9 +17,9 @@ export const useQueryParams = () => {
   let page = isNaN(+queryPage) ? 1 : +queryPage;
   if (page < 1) page = 1;
 
-  const queryLimit = searchParams.get('limit') ?? '6';
-  let limit = isNaN(+queryLimit) ? 6 : +queryLimit;
-  if (limit < 1 || limit > 50) limit = 6;
+  const queryLimit = searchParams.get('limit') ?? '5';
+  let limit = isNaN(+queryLimit) ? 5 : +queryLimit;
+  if (limit < 1 || limit > 50) limit = 5;
 
   const queryPlan = searchParams.get('plan');
   const plan: UserPlan | '' = PLANS.includes(queryPlan as UserPlan) ? (queryPlan as UserPlan) : '';

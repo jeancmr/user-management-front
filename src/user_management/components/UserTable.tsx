@@ -12,10 +12,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { CustomPagination } from '@/components/custom/CustomPagination';
 import type { User } from '../types/user';
 import { getInitials } from '../utils/get-initials-name';
 import { UserFilters } from './UserFilters';
+import { UserTablePagination } from './UserTablePagination';
 
 interface Props {
   users: User[];
@@ -152,7 +152,7 @@ export const UserTable = ({ users, totalPages, totalUsers, onEditUser, onDeleteU
           </div>
         )}
 
-        <CustomPagination totalPages={totalPages} />
+        {totalPages > 1 && <UserTablePagination totalPages={totalPages} />}
       </CardContent>
     </Card>
   );
