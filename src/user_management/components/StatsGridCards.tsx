@@ -1,12 +1,13 @@
-import { Card, CardContent } from '@/components/ui/card';
+import React from 'react';
 import { Crown, UserCheck, Users, UserX } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import type { Summary } from '../types/get-summary-analytics-response';
 
 interface Props {
   summary: Summary;
 }
 
-export const StatsGridCards = ({ summary }: Props) => {
+export const StatsGridCards = React.memo(({ summary }: Props) => {
   const { active, pro, suspended, totalUsers } = summary;
 
   const stats = [
@@ -57,4 +58,4 @@ export const StatsGridCards = ({ summary }: Props) => {
       ))}
     </div>
   );
-};
+});

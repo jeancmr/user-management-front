@@ -1,10 +1,10 @@
+import React, { use } from 'react';
+import { LogOut, Plus, Sun, Users, Moon } from 'lucide-react';
+import { useTheme } from '@/context/useTheme';
 import { AuthContext } from '@/auth/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { useTheme } from '@/context/useTheme';
-import { LogOut, Plus, Sun, Users, Moon } from 'lucide-react';
-import { use } from 'react';
 
-export const Header = () => {
+export const Header = React.memo(() => {
   const { toggleTheme, theme } = useTheme();
   const { logout } = use(AuthContext);
 
@@ -50,4 +50,4 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+});
