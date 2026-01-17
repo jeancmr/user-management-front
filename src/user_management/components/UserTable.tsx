@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from 'date-fns';
+import { ArrowUpDown, Pencil, Trash2 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,33 +12,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { formatDistanceToNow } from 'date-fns';
-import { ArrowUpDown, Pencil, Trash2 } from 'lucide-react';
-
 import { CustomPagination } from '@/components/custom/CustomPagination';
 import type { User } from '../types/user';
 import { getInitials } from '../utils/get-initials-name';
-import { deleteUserAction } from '../actions/delete-user.action';
-import { toast } from 'sonner';
 
 interface Props {
   users: User[];
   totalPages: number;
   totalUsers: number;
   onEditUser: (user: User) => void;
-  onUserUpdated: () => void;
+  onDeleteUser: (user: User) => void;
 }
-export const UserTable = ({ users, totalPages, totalUsers, onEditUser, onUserUpdated }: Props) => {
-  const handleUserDelete = async (id: string) => {
-    try {
-      await deleteUserAction(id);
-      toast.success('User has been deleted');
-      onUserUpdated();
-    } catch (error) {
-      toast.error((error as Error).message);
-    }
-  };
-
+export const UserTable = ({ users, totalPages, totalUsers, onEditUser, onDeleteUser }: Props) => {
+  console.log('USER TABLE');
   return (
     <Card className="bg-card border-border">
       <CardHeader className="pb-4">
@@ -146,7 +134,7 @@ export const UserTable = ({ users, totalPages, totalUsers, onEditUser, onUserUpd
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                      onClick={() => handleUserDelete(user.id)}
+                      onClick={() => onDeleteUser(user)}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

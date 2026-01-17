@@ -10,10 +10,12 @@ import { UserTable } from '@/user_management/components/UserTable';
 import { useValidateParams } from '@/user_management/hooks/useValidateParams';
 import type { Analytics, Summary } from '@/user_management/types/get-summary-analytics-response';
 import type { User } from '@/user_management/types/user';
+import { UserDeleteDialog } from '@/user_management/components/UserDeleteDialog';
 
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [deletingUser, setDeletingUser] = useState<User | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [summary, setSummary] = useState<Summary>({
@@ -76,7 +78,7 @@ export const HomePage = () => {
           totalPages={totalPages}
           totalUsers={totalUsers}
           onEditUser={setEditingUser}
-          onUserUpdated={() => setRefreshKey((prev) => prev + 1)}
+          onDeleteUser={setDeletingUser}
         />
 
         {editingUser && (
@@ -84,6 +86,15 @@ export const HomePage = () => {
             user={editingUser}
             open={!!editingUser}
             onCancelEdit={(open: boolean) => !open && setEditingUser(null)}
+            onUserUpdated={() => setRefreshKey((prev) => prev + 1)}
+          />
+        )}
+
+        {deletingUser && (
+          <UserDeleteDialog
+            user={deletingUser}
+            open={!!deletingUser}
+            onCancelDelete={(open: boolean) => !open && setDeletingUser(null)}
             onUserUpdated={() => setRefreshKey((prev) => prev + 1)}
           />
         )}
