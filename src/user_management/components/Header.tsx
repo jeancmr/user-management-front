@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export const Header = React.memo(() => {
   const { toggleTheme, theme } = useTheme();
-  const { logout } = use(AuthContext);
+  const { logout, user: name } = use(AuthContext);
 
   const isThemeLight = theme === 'light';
 
@@ -25,6 +25,9 @@ export const Header = React.memo(() => {
         </div>
 
         <nav className="flex items-center gap-3">
+          <span className="text-sm text-muted-foreground">
+            Welcome, <span className="font-medium text-foreground">{name}</span>
+          </span>
           <Button
             variant="outline"
             className="gap-2 text-muted-foreground hover:text-foreground bg-transparent"

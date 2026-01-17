@@ -5,6 +5,7 @@ import { logoutAction } from '../actions/logout.action';
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   const handleAuth = (value: boolean) => {
@@ -20,7 +21,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await verifyAction();
+        const result = await verifyAction();
+        setUser(result);
         setIsAuthenticated(true);
       } catch {
         setIsAuthenticated(false);
@@ -33,7 +35,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   return (
-    <AuthContext value={{ isAuthenticated, onAuth: handleAuth, isLoading, logout }}>
+    <AuthContext
+      value={{
+        isAuthenticated,
+        isLoading,
+        user,
+        logout,
+        onAuth: handleAuth,
+      }}
+    >
       {children}
     </AuthContext>
   );
