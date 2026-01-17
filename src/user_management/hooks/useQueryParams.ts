@@ -1,5 +1,13 @@
 import { useRef, type KeyboardEvent } from 'react';
 import { useSearchParams } from 'react-router';
+import {
+  PLANS,
+  ROLES,
+  STATUSES,
+  type UserPlan,
+  type UserRole,
+  type UserStatus,
+} from '../types/user';
 
 export const useQueryParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,10 +21,18 @@ export const useQueryParams = () => {
   let limit = isNaN(+queryLimit) ? 6 : +queryLimit;
   if (limit < 1 || limit > 50) limit = 6;
 
-  const plan = searchParams.get('plan') ?? '';
-  const role = searchParams.get('role') ?? '';
+  const queryPlan = searchParams.get('plan');
+  const plan: UserPlan | '' = PLANS.includes(queryPlan as UserPlan) ? (queryPlan as UserPlan) : '';
+
+  const queryRole = searchParams.get('role');
+  const role: UserRole | '' = ROLES.includes(queryRole as UserRole) ? (queryRole as UserRole) : '';
+
   const search = searchParams.get('search') ?? '';
-  const status = searchParams.get('status') ?? '';
+
+  const queryStatus = searchParams.get('status');
+  const status: UserStatus | '' = STATUSES.includes(queryStatus as UserStatus)
+    ? (queryStatus as UserStatus)
+    : '';
 
   const setQueryParams = (name: string, value: string) => {
     setSearchParams((prev) => {

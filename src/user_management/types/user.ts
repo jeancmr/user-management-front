@@ -1,6 +1,10 @@
-export type UserStatus = 'active' | 'suspended';
-export type UserRole = 'admin' | 'user';
-export type UserPlan = 'free' | 'pro';
+export const PLANS = ['free', 'pro'] as const;
+export const ROLES = ['admin', 'user'] as const;
+export const STATUSES = ['admin', 'user'] as const;
+
+export type UserStatus = (typeof STATUSES)[number];
+export type UserRole = (typeof ROLES)[number];
+export type UserPlan = (typeof PLANS)[number];
 
 export interface User {
   id: string;
