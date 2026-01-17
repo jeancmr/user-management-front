@@ -1,4 +1,3 @@
-import { useSearchParams } from 'react-router';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -10,25 +9,11 @@ import {
 import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { plans, roles, statutes } from '../utils/filters-options';
+import { useValidateParams } from '../hooks/useQueryParams';
 
 export const UserFilters = () => {
   const [search, setSearch] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const status = searchParams.get('status') ?? '';
-  const rol = searchParams.get('rol') ?? '';
-  const plan = searchParams.get('plan') ?? '';
-
-  const setQueryParams = (name: string, value: string) => {
-    setSearchParams((prev) => {
-      prev.set(name, value);
-      return prev;
-    });
-  };
-
-  const handleSelect = (name: string, value: string) => {
-    setQueryParams(name, value);
-  };
+  const { plan, role, status, onSelect } = useValidateParams();
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -42,7 +27,7 @@ export const UserFilters = () => {
         />
       </div>
 
-      <Select value={status} onValueChange={(value) => handleSelect('status', value)}>
+      <Select value={status} onValueChange={(value) => onSelect('status', value)}>
         <SelectTrigger className="w-30 bg-secondary text-foreground">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
@@ -55,20 +40,20 @@ export const UserFilters = () => {
         </SelectContent>
       </Select>
 
-      <Select value={rol} onValueChange={(value) => handleSelect('rol', value)}>
+      <Select value={role} onValueChange={(value) => onSelect('role', value)}>
         <SelectTrigger className="w-27 bg-secondary text-foreground">
           <SelectValue placeholder="Role" />
         </SelectTrigger>
         <SelectContent className="bg-popover text-popover-foreground" position="popper">
-          {roles.map((rol) => (
-            <SelectItem value={rol.value} key={rol.label}>
-              {rol.label}
+          {roles.map((role) => (
+            <SelectItem value={role.value} key={role.label}>
+              {role.label}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select value={plan} onValueChange={(value) => handleSelect('plan', value)}>
+      <Select value={plan} onValueChange={(value) => onSelect('plan', value)}>
         <SelectTrigger className="w-25 bg-secondary text-foreground">
           <SelectValue placeholder="Plan" />
         </SelectTrigger>

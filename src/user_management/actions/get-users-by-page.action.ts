@@ -2,11 +2,24 @@ import axios from 'axios';
 import { userApi } from '../api/user.api';
 import type { UsersReponse } from '../types/get-users.response';
 import type { ApiErrorResponse } from '@/auth/types/api.error.response';
+import { cleanParams } from '../utils/clean-params';
 
-export const getUsersByPageAction = async (page: number = 1, limit: number = 6) => {
+interface Options {
+  plan?: string;
+  rol?: string;
+  status?: string;
+}
+
+export const getUsersByPageAction = async (
+  page: number = 1,
+  limit: number = 6,
+  filters: Options,
+) => {
   try {
+    const cleanEmptyFilters = cleanParams({ ...filters });
+
     const { data } = await userApi.get<UsersReponse>('/', {
-      params: { page, limit },
+      params: { page, limit, ...cleanEmptyFilters },
     });
 
     const usersWithDatesFormated = data.data.users.map((user) => ({

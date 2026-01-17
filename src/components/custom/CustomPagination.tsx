@@ -1,4 +1,4 @@
-import { useValidateParams } from '@/user_management/hooks/useQueryParams';
+import { useQueryParams } from '@/user_management/hooks/useQueryParams';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 
@@ -6,7 +6,7 @@ interface Props {
   totalPages: number;
 }
 export const CustomPagination = ({ totalPages }: Props) => {
-  const { page, onPageChange } = useValidateParams();
+  const { page, onPageChange } = useQueryParams();
 
   return (
     <div className="flex items-center justify-center space-x-2 border-t border-border py-4">

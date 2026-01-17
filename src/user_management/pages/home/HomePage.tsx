@@ -6,11 +6,11 @@ import { Header } from '@/user_management/components/Header';
 import { StatsGridCards } from '@/user_management/components/StatsGridCards';
 import { UserCharts } from '@/user_management/components/UserCharts';
 import { UserEditForm } from '@/user_management/components/UserEditForm';
+import { UserDeleteDialog } from '@/user_management/components/UserDeleteDialog';
 import { UserTable } from '@/user_management/components/UserTable';
-import { useValidateParams } from '@/user_management/hooks/useValidateParams';
+import { useQueryParams } from '@/user_management/hooks/useQueryParams';
 import type { Analytics, Summary } from '@/user_management/types/get-summary-analytics-response';
 import type { User } from '@/user_management/types/user';
-import { UserDeleteDialog } from '@/user_management/components/UserDeleteDialog';
 
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -33,16 +33,21 @@ export const HomePage = () => {
 
   const [totalPages, setTotalPages] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
-  const { limit, page } = useValidateParams();
+  const { limit, page, plan, role, status } = useQueryParams();
 
   useEffect(() => {
+    const filters = {
+      plan,
+      role,
+      status,
+    };
     const getUsers = async () => {
       try {
         const {
           usersWithDatesFormated: users,
           totalPages,
           total: totalUsers,
-        } = await getUsersByPageAction(page, limit);
+        } = await getUsersByPageAction(page, limit, filters);
         setUsers(users);
         setTotalPages(totalPages);
         setTotalUsers(totalUsers);
@@ -52,7 +57,7 @@ export const HomePage = () => {
     };
 
     getUsers();
-  }, [page, limit, refreshKey]);
+  }, [page, limit, plan, role, status, refreshKey]);
 
   useEffect(() => {
     const getSummaryAnalytics = async () => {
