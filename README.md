@@ -1,73 +1,135 @@
-# React + TypeScript + Vite
+# User Management Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern user management dashboard built with React, TypeScript, and Vite. This application provides authentication, user CRUD operations, analytics visualization and responsive UI.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Authentication System**
+  - Login and registration with form validation
+  - Protected routes for authenticated users
+  - JWT-based session management
 
-## React Compiler
+- **User Management**
+  - View, edit, and delete users
+  - Pagination and filtering (by plan, role, status, search)
+  - Real-time data updates
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- **Analytics Dashboard**
+  - Summary statistics cards (total users, active, suspended, pro)
+  - Interactive charts for user growth, plan distribution, and weekly activity
+  - Built with Recharts
 
-## Expanding the ESLint configuration
+- **Modern UI/UX**
+  - Light/Dark theme support
+  - Responsive design with Tailwind CSS
+  - Radix UI components (dialogs, selects, tabs, etc.)
+  - Toast notifications with Sonner
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Category          | Technologies           |
+| ----------------- | ---------------------- |
+| **Framework**     | React 19, TypeScript   |
+| **Build Tool**    | Vite                   |
+| **Styling**       | Tailwind CSS 4         |
+| **UI Components** | Radix UI, Lucide Icons |
+| **Forms**         | React Hook Form, Zod   |
+| **Routing**       | React Router 7         |
+| **HTTP Client**   | Axios                  |
+| **Charts**        | Recharts               |
+| **Notifications** | Sonner                 |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📁 Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── auth/                 # Authentication module
+│   ├── actions/          # Auth actions (login, logout, register, verify)
+│   ├── api/              # Auth API calls
+│   ├── components/       # Auth UI components
+│   ├── context/          # Auth context & provider
+│   ├── pages/            # Auth pages
+│   ├── schemas/          # Zod validation schemas
+│   └── types/            # TypeScript types
+├── components/
+│   ├── custom/           # Custom reusable components
+│   └── ui/               # shadcn/ui components
+├── context/              # Global context (Theme)
+├── lib/                  # Utility functions
+├── router/               # App routing configuration
+└── user_management/      # User management module
+    ├── actions/          # User CRUD actions
+    ├── api/              # User API calls
+    ├── components/       # User management UI
+    ├── hooks/            # Custom hooks
+    ├── pages/            # User management pages
+    ├── types/            # TypeScript types
+    └── utils/            # Utility functions
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Node.js 18+
+- Yarn (this project was built with Yarn)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd user-management-front
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   yarn install
+   ```
+
+3. Create a `.env` file based on the template:
+
+   ```bash
+   cp .env.template .env
+   ```
+
+   Then update the environment variables:
+
+   ```env
+   VITE_API_URL=http://localhost:3000  # Your backend API URL
+   ```
+
+4. Start the development server:
+
+   ```bash
+   yarn dev
+   ```
+
+5. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## 📜 Available Scripts
+
+| Command        | Description                       |
+| -------------- | --------------------------------- |
+| `yarn dev`     | Start development server with HMR |
+| `yarn build`   | Build for production              |
+| `yarn preview` | Preview production build          |
+| `yarn lint`    | Run ESLint                        |
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory based on `.env.template`:
+
+| Variable       | Description          | Example                 |
+| -------------- | -------------------- | ----------------------- |
+| `VITE_API_URL` | Backend API base URL | `http://localhost:3000` |
+
+> **Note:** All environment variables must be prefixed with `VITE_` to be exposed to the client-side code.
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
