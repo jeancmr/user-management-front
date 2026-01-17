@@ -7,6 +7,7 @@ import { cleanParams } from '../utils/clean-params';
 interface Options {
   plan?: string;
   rol?: string;
+  search?: string;
   status?: string;
 }
 

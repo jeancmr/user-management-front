@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -6,23 +7,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Search } from 'lucide-react';
-import { useState } from 'react';
+import { Search, X } from 'lucide-react';
+import { useQueryParams } from '../hooks/useQueryParams';
 import { plans, roles, statutes } from '../utils/filters-options';
-import { useValidateParams } from '../hooks/useQueryParams';
 
 export const UserFilters = () => {
-  const [search, setSearch] = useState('');
-  const { plan, role, status, onSelect } = useValidateParams();
+  const { inputRef, plan, role, search, status, onSelect, onClearAllFilters, onKeyDown } =
+    useQueryParams();
 
   return (
     <div className="flex flex-wrap items-center gap-2">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
+          ref={inputRef}
           placeholder="Search users..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={onKeyDown}
+          defaultValue={search}
           className="w-50 bg-secondary pl-9 text-foreground placeholder:text-muted-foreground"
         />
       </div>
@@ -65,17 +66,18 @@ export const UserFilters = () => {
           ))}
         </SelectContent>
       </Select>
-      {/* {hasActiveFilters && (
+
+      {(plan || role || status) && (
         <Button
           variant="ghost"
           size="sm"
-          onClick={onClearFilters}
+          onClick={onClearAllFilters}
           className="gap-1 text-muted-foreground hover:text-foreground"
         >
           <X className="h-4 w-4" />
           Clear
         </Button>
-      )} */}
+      )}
     </div>
   );
 };

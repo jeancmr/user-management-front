@@ -33,12 +33,13 @@ export const HomePage = () => {
 
   const [totalPages, setTotalPages] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
-  const { limit, page, plan, role, status } = useQueryParams();
+  const { limit, page, plan, role, search, status } = useQueryParams();
 
   useEffect(() => {
     const filters = {
       plan,
       role,
+      search,
       status,
     };
     const getUsers = async () => {
@@ -57,7 +58,7 @@ export const HomePage = () => {
     };
 
     getUsers();
-  }, [page, limit, plan, role, status, refreshKey]);
+  }, [page, limit, plan, role, search, status, refreshKey]);
 
   useEffect(() => {
     const getSummaryAnalytics = async () => {
